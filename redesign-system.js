@@ -436,7 +436,6 @@
     const volFill = document.getElementById('music-vol-fill');
     const volOutput = document.getElementById('music-vol-output');
     const volGroup = musicSection.querySelector('.music-vol-group');
-    const presetBtns = musicSection.querySelectorAll('.music-preset-group .preset-btn');
     const navMusicBtn = document.querySelector('.nav-music-btn');
 
     function syncMusicUI() {
@@ -476,23 +475,18 @@
         muteBtn.setAttribute('aria-pressed', String(isMuted));
         muteBtn.setAttribute('aria-label', isMuted ? 'Unmute audio' : 'Mute audio');
       }
-
-      presetBtns.forEach(btn => {
-        const pVal = parseInt(btn.dataset.preset, 10);
-        const active = (pVal === 0 && isMuted) || (!isMuted && pVal === volPct);
-        btn.classList.toggle('active', active);
-      });
     }
 
     if (playBtn) {
       playBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (!window.__bgAudio) return;
-        const nowOn = !window.__bgAudio.isOn();
-        if (nowOn && window.__bgAudio.getVolume() === 0) {
+        const isPlaying = window.__bgAudio.isOn();
+        const nextState = !isPlaying;
+        if (nextState && window.__bgAudio.getVolume() === 0) {
           window.__bgAudio.setVolume(0.2);
         }
-        window.__bgAudio.setSound(nowOn);
+        window.__bgAudio.setSound(nextState);
         syncMusicUI();
       });
     }
@@ -513,29 +507,18 @@
       muteBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (!window.__bgAudio) return;
-        const currentlyOn = window.__bgAudio.isOn() && window.__bgAudio.getVolume() > 0;
-        if (currentlyOn) {
-          window.__bgAudio.setSound(false);
-        } else {
+        const isMuted = !window.__bgAudio.isOn() || window.__bgAudio.getVolume() === 0;
+        if (isMuted) {
           if (window.__bgAudio.getVolume() === 0) {
             window.__bgAudio.setVolume(0.2);
           }
           window.__bgAudio.setSound(true);
+        } else {
+          window.__bgAudio.setSound(false);
         }
         syncMusicUI();
       });
     }
-
-    presetBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!window.__bgAudio) return;
-        const pVal = parseInt(btn.dataset.preset, 10);
-        window.__bgAudio.setVolume(pVal / 100);
-        window.__bgAudio.setSound(pVal > 0);
-        syncMusicUI();
-      });
-    });
 
     if (navMusicBtn) {
       navMusicBtn.addEventListener('click', () => {
@@ -550,7 +533,6 @@
 
     // Initial sync
     syncMusicUI();
-    // Repeat once scene and sound settle
     setTimeout(syncMusicUI, 300);
     setTimeout(syncMusicUI, 1200);
   }
