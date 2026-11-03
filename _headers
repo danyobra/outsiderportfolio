@@ -1,0 +1,34 @@
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-iOMAMIaYHkScF4ZHhBhF+/Rovio3JY0pnojCqq3XSaA=' 'sha256-WYH0CHecaWfKxuTc6YCtHqWOz6smMjG4o2SQaVcUQhI=' 'sha256-AwJApkUzmsdbsHw8a+W8xW6l/UbhWL1VrF375Kd4prA=' 'sha256-XaHKfSd4jzanBQg96qKv6ex4NB8LUlRh5LpCFnBjr9M=' 'wasm-unsafe-eval' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' blob: data:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin
+
+/basis/*.wasm
+  Content-Type: application/wasm
+/models/*.glb
+  Content-Type: model/gltf-binary
+/bake/*.glb
+  Content-Type: model/gltf-binary
+/bake/*.ktx2
+  Content-Type: image/ktx2
+/sounds/*.mp3
+  Content-Type: audio/mpeg
+  Cache-Control: public, max-age=604800
+/_astro/*.js
+  Content-Type: text/javascript; charset=utf-8
+/_astro/*.css
+  Content-Type: text/css; charset=utf-8
+/fonts/*.woff2
+  Content-Type: font/woff2
+/guard.js
+  Content-Type: text/javascript; charset=utf-8
+/static.js
+  Content-Type: text/javascript; charset=utf-8
+/redesign-system.js
+  Content-Type: text/javascript; charset=utf-8
+/static.css
+  Content-Type: text/css; charset=utf-8
