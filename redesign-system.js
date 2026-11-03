@@ -434,8 +434,9 @@
     const muteBtn = document.getElementById('music-mute-toggle');
     const volSlider = document.getElementById('music-vol-slider');
     const volFill = document.getElementById('music-vol-fill');
+    const volThumb = document.getElementById('music-vol-thumb');
     const volOutput = document.getElementById('music-vol-output');
-    const volGroup = musicSection.querySelector('.music-vol-group');
+    const volPill = musicSection.querySelector('.music-vol-pill');
     const navMusicBtn = document.querySelector('.nav-music-btn');
 
     function syncMusicUI() {
@@ -445,7 +446,9 @@
       const volPct = Math.round(vol * 100);
       const isMuted = !isPlaying || volPct === 0;
 
+      // Toggle BOTH is-playing and is-paused (CSS uses .is-paused for icon swap)
       musicSection.classList.toggle('is-playing', isPlaying);
+      musicSection.classList.toggle('is-paused', !isPlaying);
       musicSection.dataset.state = isPlaying ? 'playing' : 'paused';
 
       if (playBtn) {
@@ -456,18 +459,24 @@
       if (volSlider) {
         volSlider.value = volPct;
       }
+      // Update the visual fill bar
       if (volFill) {
         volFill.style.width = volPct + '%';
+      }
+      // Update the glowing thumb position
+      if (volThumb) {
+        volThumb.style.left = volPct + '%';
       }
       if (volOutput) {
         volOutput.textContent = isMuted ? 'Muted' : volPct + '%';
       }
 
-      if (volGroup) {
+      // data-muted attribute on the pill container drives speaker icon state
+      if (volPill) {
         if (isMuted) {
-          volGroup.setAttribute('data-muted', '');
+          volPill.setAttribute('data-muted', '');
         } else {
-          volGroup.removeAttribute('data-muted');
+          volPill.removeAttribute('data-muted');
         }
       }
 
@@ -496,9 +505,15 @@
         if (!window.__bgAudio) return;
         const val = parseFloat(volSlider.value) / 100;
         window.__bgAudio.setVolume(val);
+        // Auto-unmute if dragging volume up from 0
         if (val > 0 && !window.__bgAudio.isOn()) {
           window.__bgAudio.setSound(true);
         }
+        // Immediate visual feedback — don't wait for syncMusicUI debounce
+        const pct = Math.round(val * 100);
+        if (volFill) volFill.style.width = pct + '%';
+        if (volThumb) volThumb.style.left = pct + '%';
+        if (volOutput) volOutput.textContent = pct === 0 ? 'Muted' : pct + '%';
         syncMusicUI();
       });
     }
