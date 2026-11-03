@@ -297,6 +297,7 @@ html.flat .surface.music {
 .music-content {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -359,11 +360,13 @@ html.flat .surface.music {
 .music-controls {
   display: flex;
   align-items: center;
-  gap: 0.85em;
+  gap: 0.65em;
   margin-top: 0.1em;
+  min-width: 0;
+  overflow: hidden;
 }
 
-/* Circular Translucent Play/Pause Button */
+/* Circular Translucent Play/Pause Button — NO visible border, glass via shadow only */
 .music-play-btn,
 #music-play-btn {
   flex: none;
@@ -373,17 +376,18 @@ html.flat .surface.music {
   background: rgba(255, 255, 255, 0.10) !important;
   -webkit-backdrop-filter: blur(14px) saturate(1.8);
   backdrop-filter: blur(14px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border: none !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
   color: #ffffff !important;
   display: grid !important;
   place-items: center;
   cursor: pointer;
   box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.35),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
               background 0.2s ease,
-              border-color 0.2s ease,
               box-shadow 0.2s ease;
   /* Kill any inherited button chrome */
   -webkit-appearance: none;
@@ -393,14 +397,23 @@ html.flat .surface.music {
   font: inherit;
 }
 
+.music-play-btn:focus,
+#music-play-btn:focus,
+.music-play-btn:focus-visible,
+#music-play-btn:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
 .music-play-btn:hover,
 #music-play-btn:hover {
   transform: scale(1.08);
   background: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.32) !important;
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28);
 }
 
 .music-play-btn:active,
@@ -420,18 +433,23 @@ html.flat .surface.music {
 .surface.music.is-paused .music-play-btn .pause-icon { display: none; }
 .surface.music.is-paused .music-play-btn .play-icon { display: block; margin-left: 0.08em; }
 
-/* Volume Frosted Glass Pill */
+/* Volume Frosted Glass Pill — NO visible border */
 .music-vol-pill {
   display: flex;
   align-items: center;
-  gap: 0.85em;
+  gap: 0.6em;
   background: rgba(255, 255, 255, 0.05);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: none !important;
+  outline: none !important;
   border-radius: 0.55em;
-  padding: 0.42em 0.85em;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  padding: 0.42em 0.7em;
+  box-shadow: none;
+  /* Prevent it from overflowing the card */
+  min-width: 0;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .music-mute-toggle {
@@ -462,13 +480,15 @@ html.flat .surface.music {
 /* Volume Slider Track with Glowing Neon Pink Pill Handle */
 .music-slider-track {
   position: relative;
-  width: 6.8em;
+  width: 4.8em;      /* reduced from 6.8em to stay within card */
+  flex-shrink: 1;    /* can compress further if needed */
   height: 0.34em;
   background: rgba(0, 0, 0, 0.55);
   border-radius: 1em;
   display: flex;
   align-items: center;
   cursor: pointer;
+  overflow: visible;
 }
 
 .music-slider-fill {
