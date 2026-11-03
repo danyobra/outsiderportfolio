@@ -196,6 +196,20 @@ a.cv[aria-disabled="true"] {
    REQUIREMENT 4: REDESIGNED /MUSIC OVERLAY (EXACT VISUAL MATCH)
    ========================================================================== */
 
+/* Kill the built-CSS blurred dark card pseudo-element behind the surface */
+.surface.music::before,
+.surface.music::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Kill the built-CSS .np div that wraps content in the original music section */
+.surface.music .np.music-content {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-column: unset !important;
+}
+
 /* Main Navigation Bar 5th Button: Music / Speaker */
 .nav-music-btn svg {
   stroke-width: 1.8px;
@@ -234,12 +248,18 @@ html.flat .surface.music {
   align-items: center;
   gap: 1.3em;
   padding: 0.6em 1.0em 0.6em 0.8em;
+  /* Kill ALL inherited surface borders/backgrounds */
   background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
   border: none !important;
+  border-top: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  outline: none !important;
   color: #f4e7e2;
   overflow: visible;
+  grid-template-columns: unset !important;
 }
 
 /* Ambient Backlight Glow */
@@ -344,38 +364,47 @@ html.flat .surface.music {
 }
 
 /* Circular Translucent Play/Pause Button */
-.music-play-btn {
+.music-play-btn,
+#music-play-btn {
   flex: none;
   width: 2.3em;
   height: 2.3em;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.10);
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.10) !important;
   -webkit-backdrop-filter: blur(14px) saturate(1.8);
   backdrop-filter: blur(14px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  display: grid;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  display: grid !important;
   place-items: center;
   cursor: pointer;
-  box-shadow: 
+  box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.35),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), 
-              background 0.2s ease, 
-              border-color 0.2s ease, 
+    inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background 0.2s ease,
+              border-color 0.2s ease,
               box-shadow 0.2s ease;
+  /* Kill any inherited button chrome */
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0 !important;
+  min-height: unset !important;
+  font: inherit;
 }
 
-.music-play-btn:hover {
+.music-play-btn:hover,
+#music-play-btn:hover {
   transform: scale(1.08);
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.32);
-  box-shadow: 
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
 }
 
-.music-play-btn:active {
+.music-play-btn:active,
+#music-play-btn:active {
   transform: scale(0.96);
 }
 
@@ -479,13 +508,49 @@ html.flat .surface.music {
 
 .music-vol-range {
   position: absolute;
-  inset: -0.6em 0;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
-  height: auto;
+  height: 1.6em; /* explicit height so it covers the track area */
   opacity: 0;
   cursor: pointer;
   margin: 0;
-  z-index: 2;
+  padding: 0;
+  z-index: 3;
+  /* Kill ALL native browser styling */
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Webkit thumb — must be transparent/hidden since we use our own custom thumb */
+.music-vol-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.music-vol-range::-moz-range-thumb {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.music-vol-range::-webkit-slider-runnable-track {
+  background: transparent;
+  border: none;
+}
+.music-vol-range::-moz-range-track {
+  background: transparent;
+  border: none;
 }
 
 .music-vol-output {
