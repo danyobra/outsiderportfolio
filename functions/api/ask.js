@@ -29,8 +29,8 @@ ABOUT OUTSIDER
 - Multi-disciplinary: also does photography, coached skating, has worked in sales and event management.
 - Loves building custom tools, local-first / open-source AI and practical generative AI.
 
-PROJECTS (all open source on GitHub, see the monitor on the desk)
-- EDI: an AI spreadsheet that runs on your own machine. Ask CSV/Excel files questions in plain English, filter, clean, chart, write formulas. Models: Ollama by default, or LM Studio, vLLM, OpenRouter, Claude, OpenAI, Gemini, Groq. Stack: Next.js, FastAPI, LangChain, SQLite, Univer, Recharts. https://github.com/illeniall239/EDI
+PROJECTS (see the monitor on the desk)
+- Outsider Gallery: a curated digital exhibition space for fine art and aesthetic transformations, built to present his digital and traditional artwork (Ghibli-inspired portraits, vintage cinematic lighting) without social media compression. Stack: Tailwind, Next.js, JavaScript, React. Hosted on Cloudflare Pages. https://outsidergallery.pages.dev
 - ResumeWesume: a resume editor where the AI makes validated edits you can watch land; PDF/Word import, ATS-safe PDF export, local-first. Stack: Python, FastAPI, Next.js, SQLite, LiteLLM, headless Chromium. https://github.com/illeniall239/ResumeWesume
 - Bandsy: IELTS Academic prep across all four modules, graded by a model you choose; explanations, writing marking, spoken examiner. Stack: React, Vite, Node, SQLite, Supabase, faster-whisper, Kokoro. https://github.com/illeniall239/Bandsy
 - Mentora: a local-first AI tutor for code on a thirteen-phase curriculum from TypeScript to agents; it adapts pacing, never content. Stack: Next.js, TypeScript, SQLite, Claude Code, Ollama. https://github.com/illeniall239/Mentora
