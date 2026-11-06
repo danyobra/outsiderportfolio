@@ -691,19 +691,14 @@ html.flat .s-chips li {
 html.flat .appbody figure { display: flex; flex-direction: column; flex: none; gap: 14px; margin: 6px 0 0; }
 
 html.flat .appbody video {
-  --vid-pad: 16px;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   flex: none;
   object-fit: contain;
   object-position: center;
-  /* black padding on TOP and RIGHT only (top right bottom left) */
-  padding: var(--vid-pad) var(--vid-pad) 0 0;
+  padding: 0;
   margin-inline: auto;
-  /* letterbox colour stays #05060d; only the padding band is pure black */
-  background:
-    linear-gradient(#05060d, #05060d) content-box,
-    #000 border-box;
+  background: #05060d;
   border: 1px solid var(--line);
   border-radius: 16px;
 }

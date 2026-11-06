@@ -628,19 +628,15 @@ html.flat .surface.music {
 /* ==========================================================================
    PROJECT VIDEOS (Outsider Gallery, ResumeWesume, Bandsy, Mentora, Naqsha)
    3D room / desk view. All five case studies share `.appbody video`.
-   - Video is centred in its card instead of pinned to the top-left.
-   - Black padding on the TOP and RIGHT edges only (bottom and left stay 0).
-   - The letterbox colour inside the video is unchanged (#08080c); only the
-     padding band is pure black. Tweak --vid-pad to make the band thicker/thinner.
+   - Video keeps its native 16:9 frame, centred in the card (no offset bars).
+   - The element colour matches the card so any leftover letterboxing blends in.
    The flat (static) view is handled in static.css.
    ========================================================================== */
 .appbody video {
-  --vid-pad: 16px;
-  /* order: top right bottom left */
-  padding: var(--vid-pad) var(--vid-pad) 0 0;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  object-fit: contain;
   object-position: center;
   margin-inline: auto;
-  background:
-    linear-gradient(#08080c, #08080c) content-box,
-    #000 border-box;
+  background: #0c0c13;
 }
